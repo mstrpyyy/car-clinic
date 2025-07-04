@@ -1,7 +1,8 @@
-import { getCustomerById } from "@/domain/customer/service"
 import * as Sentry from "@sentry/nextjs"
-import { BackButton } from "../_components/back-button"
-import { getTicketById } from "@/domain/ticket/service"
+import { BackButton } from "../../_components/back-button"
+import { getCustomer } from "@/domain/customer/repository"
+import { getTicket } from "@/domain/ticket/repository"
+import TicketForm from "./TicketForm"
 
 type CustomerFormPage = {
     searchParams: Promise<{ [key: string]: string | undefined }>
@@ -22,7 +23,7 @@ export default async function TicketFormPage({searchParams}:CustomerFormPage) {
 
     // New ticket form 
     if (customerId) {
-      const customer = await getCustomerById(+customerId)
+      const customer = await getCustomer(+customerId)
 
       if (!customer) {
         return (
@@ -42,13 +43,12 @@ export default async function TicketFormPage({searchParams}:CustomerFormPage) {
         )
       }
 
-      // return ticket form 
-      console.log(customer)
+      <TicketForm customer={customer} />
     }
 
     // Edit ticket form 
     if (ticketId) {
-      const ticket = await getTicketById(+ticketId)
+      const ticket = await getTicket(+ticketId)
 
       if (!ticket) {
         return (
@@ -59,7 +59,7 @@ export default async function TicketFormPage({searchParams}:CustomerFormPage) {
         )
       }
 
-      const customer = await getCustomerById(ticket.customerId)
+      const customer = await getCustomer(ticket.customerId)
 
       // return ticket form 
       console.log('ticket: ', ticket)
@@ -68,9 +68,9 @@ export default async function TicketFormPage({searchParams}:CustomerFormPage) {
     }
 
   } catch (e) {
-      if (e instanceof Error) {
-          Sentry.captureException(e)
-          throw e
-      }
+    if (e instanceof Error) {
+      Sentry.captureException(e)
+      throw e
+    }
   }
 }

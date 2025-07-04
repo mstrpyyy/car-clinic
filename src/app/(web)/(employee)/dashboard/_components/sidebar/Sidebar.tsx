@@ -1,9 +1,12 @@
 'use client'
 
-import { RiHome3Line, RiHome3Fill, RiFileUserLine, RiFileUserFill, RiFileList3Line, RiFileList3Fill } from "react-icons/ri";
+import { RiHome3Line, RiHome3Fill, RiFileUserLine, RiFileUserFill, RiFileList3Line, RiFileList3Fill, RiLogoutBoxRLine } from "react-icons/ri";
 import Link from "next/link"
 import { usePathname } from "next/navigation";
 import { ModeToggle } from "@/components/dark-mode-selector";
+import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 const routes = [
   {
@@ -14,7 +17,7 @@ const routes = [
   },
   {
     name: 'Costumers',
-    url: '/dashboard/costumers',
+    url: '/dashboard/customers',
     defaultIcon: <RiFileUserLine/>,
     activeIcon: <RiFileUserFill/>
   },
@@ -34,24 +37,33 @@ export const Sidebar = () => {
   const pathWithoutLocale = (() => {
     const segments = pathname.split('/')
     return SUPPORTED_LOCALES.includes(segments[1])
-      ? '/' + segments.slice(2).join('/')
+      ? '/' + segments.slice(3).join('/')
       : pathname
   })()
 
 
   return (
-    <div className='sticky h-dvh top-0 left-0 border shadow w-16 flex flex-col items-center justify-between py-3 z-50 bg-background'>
+    <div className='sticky h-dvh top-0 left-0 border shadow w-16 flex flex-col items-center py-6 z-50 bg-background'>
+
+      <Image
+        src={'/logo/icon.png'} 
+        alt={'carClinic logo'}
+        width={500}
+        height={500}
+        className={`w-[40px] mx-auto`}
+        priority
+      />
+
       <nav>
-        <ul className="space-y-3">
+        <ul className="space-y-3 mt-10">
           {routes.map((route, idx) => {
             const isActive = pathWithoutLocale === route.url
             return (
               <li key={idx} className="relative block group">
                 <Link
                   href={`${route.url}`}
-                  className={`rounded-full h-10 w-10 flex items-center justify-center text-2xxl hover:bg-accent duration-200
-                  ${isActive ? 'text-primary' : 'text-sidebar-foreground'}  
-                  `}
+                  data-variant={isActive}
+                  className={`sidebar-button`}
                 >
                   {isActive ? route.activeIcon :  route.defaultIcon}
                 </Link>
@@ -73,7 +85,18 @@ export const Sidebar = () => {
         </ul>
       </nav>
 
-      <ModeToggle />
+      <div className="space-y-3 mt-auto">
+        <ModeToggle className="w-10 h-10 rounded-lg" />
+
+        <div className="h-[1px] bg-muted-foreground"/>
+
+          <Button variant={'outline'} data-variant="destructive" className="outline-destructive-button h-10 w-10" aria-label='LogOut' title='LogOut'>
+        <LogoutLink>
+            <RiLogoutBoxRLine className=""/>
+        </LogoutLink>
+          </Button>
+      </div>
+
 
     </div>
   )

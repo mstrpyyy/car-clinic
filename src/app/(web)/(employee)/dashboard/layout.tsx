@@ -1,5 +1,5 @@
-import { ContentWrapper } from "./_components/ContentWrapper";
-import { Sidebar } from "./_components/sidebar/Sidebar";
+import { ContentWrapper } from "./_components/Content-wrapper";
+import { Sidebar } from "./_components/sidebar/sidebar";
 
 
 

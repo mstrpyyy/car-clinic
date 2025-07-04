@@ -135,7 +135,7 @@
 }
 
 :root {
-  --background: oklch(1 0 0);
+  --background: oklch(100% 0.00011 271.152);
   --foreground: oklch(0.141 0.004 285.824);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.141 0.004 285.824);
@@ -171,7 +171,7 @@
 }
 
 .dark {
-  --background: oklch(14.077% 0.0044 285.776);
+  --background: oklch(0% 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.141 0.004 285.824);
   --card-foreground: oklch(0.985 0 0);
@@ -223,3 +223,25 @@ button {
   @apply hover:cursor-pointer;
 }
 
+.blur-card {
+  @apply bg-background/50 backdrop-blur-sm border shadow overflow-hidden rounded-lg;
+}
+
+.sidebar-button {
+  @apply rounded-lg h-10 w-10 shrink-0 flex items-center justify-center text-2xxl hover:bg-accent duration-200 text-sidebar-foreground;
+}
+
+.sidebar-button[data-variant="true"] {
+  @apply text-primary bg-accent;
+}
+
+.outline-destructive-button {
+  @apply 
+  text-destructive/80 dark:text-destructive/90 hover:text-destructive
+  border-destructive/20 dark:border-destructive/30
+  dark:bg-destructive/15 hover:bg-destructive/5 dark:hover:bg-destructive/20;
+}
+/* 
+.sidebar-button[data-variant="destructive"]:hover {
+  @apply bg-transparent text-destructive border-destructive/100;
+} */

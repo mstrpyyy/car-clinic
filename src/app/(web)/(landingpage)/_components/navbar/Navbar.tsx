@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import React from 'react'
 import { RiPhoneFill, RiMenu2Fill } from "react-icons/ri";
-import { ContentWrapper } from '../ContentWrapper';
+import { ContentWrapper } from '../content-wrapper';
 
 
 export const Navbar = () => {

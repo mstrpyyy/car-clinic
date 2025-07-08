@@ -1,6 +1,8 @@
 
-import { ContentWrapper } from "./_components/wrapper";
+import { ContentWrapper } from "./_components/content-wrapper";
 import { Sidebar } from "./_components/sidebar/sidebar";
+import { BgFixed } from "./_components/bg-fixed";
+
 
 
 
@@ -11,9 +13,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex relative">
+    <div className="flex max-sm:flex-col relative">
       <Sidebar />
-      <ContentWrapper className="min-h-dvh">
+      <BgFixed />
+      <ContentWrapper className="min-h-dvh z-10 px-4 sm:px-8">
           {children}
       </ContentWrapper>
     </div>

@@ -1,6 +1,6 @@
 {
-  "id": "43a14286-a7c6-44ad-84eb-edba60b1baf7",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "fe3724a5-b6c8-413c-b10a-3f85f105d705",
+  "prevId": "43a14286-a7c6-44ad-84eb-edba60b1baf7",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -158,8 +158,7 @@
           "name": "tech",
           "type": "varchar",
           "primaryKey": false,
-          "notNull": true,
-          "default": "'unassigned'"
+          "notNull": false
         },
         "created_at": {
           "name": "created_at",

@@ -9,15 +9,15 @@ type CustomerFormPage = {
 
 export default async function CustomerFormPage({searchParams}:CustomerFormPage) {
   try {
-    const { customerId } = await searchParams
+    const { c } = await searchParams
 
-    if (customerId) {
-      const customer = await getCustomerById(+customerId)     
+    if (c) {
+      const customer = await getCustomerById(+c)     
 
       if (!customer) {
         return (
           <>
-            <h2 className="text-2xl mb-2">Customer ID #{customerId} not found</h2>
+            <h2 className="text-2xl mb-2">Customer ID #{c} not found</h2>
             <BackButton title="Go Back" variant="default" />
           </>
         )

@@ -1,8 +1,8 @@
-import { SUPPORTED_LOCALES } from "@/constant/general.constant"
+import { SUPPORTED_LOCALES } from "@/constants/general.constant"
 
-export const pathWithoutLocale = (pathname:string, ) => { 
+export const pathWithoutLocale = (pathname:string, take: number) => { 
     const segments = pathname.split('/')
     return SUPPORTED_LOCALES.includes(segments[1])
-      ? '/' + segments.slice(3).join('/')
+      ? '/' + segments.slice(take).join('/')
       : pathname
   }

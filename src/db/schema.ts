@@ -10,7 +10,7 @@ export const customers = pgTable("customers", {
   address1: varchar("address1").notNull(),
   address2: varchar("address2"),
   city: varchar("city").notNull(),
-  state: varchar("state").notNull(),
+  province: varchar("province").notNull(),
   postCode: varchar("post_code", { length:5 }).notNull(),
   notes: text("notes"),
   active: boolean("active").notNull().default(true),
@@ -30,7 +30,7 @@ export const tickets = pgTable("tickets", {
   title: varchar("title").notNull(),
   description: text("description"),
   completed: boolean("completed").notNull().default(false),
-  tech: varchar("tech").notNull().default('unassigned'),
+  tech: varchar("tech"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow().$onUpdate(() => new Date()),
 })

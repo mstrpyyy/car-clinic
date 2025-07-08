@@ -6,13 +6,13 @@ export const insertCustomerSchema = z.object({
   address1: z.string().min(1, "Address is required"),
   address2: z.string().optional().nullable(),
   city: z.string().min(1, "City is required"),
-  state: z.string().min(1, "State is required"),
+  province: z.string().min(1, "province is required"),
   postCode: z.string().length(5, "Postcode must be exactly 5 digits"),
   email: z.string().email("Invalid email address"),
   phone: z.string()
     .min(8, "Phone number must be at least 8 digits")
     .max(12, "Phone number must be less than 12 digits"),
-  notes: z.string().optional().nullable(),
+  notes: z.string().max(1000, "Notes must be less than 1000 characters").nullable().optional(),
   active: z.boolean().optional(), // Usually optional, use DB default if missing
   // id, createdAt, updatedAt are usually auto-managed, so omit from insert validation
 });
@@ -24,7 +24,7 @@ export const selectCustomerSchema = z.object({
   address1: z.string(),
   address2: z.string().optional().nullable(),
   city: z.string(),
-  state: z.string(),
+  province: z.string(),
   postCode: z.string(),
   email: z.string().email(),
   phone: z.string(),

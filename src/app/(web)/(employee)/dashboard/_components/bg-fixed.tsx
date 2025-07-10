@@ -23,8 +23,8 @@ export const BgFixed:React.FC = () => {
   : '/images/bg-dashboard-l.svg'
   
   return (
-    <div className='fixed top-0  z-0'>
-      <div className='relative w-screen h-dvh'>
+    <div className='fixed top-0 z-0'>
+      <div className='relative w-screen min-h-screen'>
         <Image
           src={imageSrc}
           alt="banner image"

@@ -17,20 +17,22 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select'
+import { ThreeDotLoading } from "@/components/icons/three-dot"
 
 type DataObj = {
     id: string,
-    description: string,
+    text: string,
 }
 
 type SelectWithLabelProps<S> = {
     fieldTitle: string,
     nameInSchema: keyof S & string,
-    data: DataObj[],
+    data: DataObj[] | undefined,
     className?: string,
+    disabled?: boolean,
 }
 
-export function SelectWithLabel<S>({fieldTitle, nameInSchema, data, className}: SelectWithLabelProps<S>) {
+export function SelectWithLabel<S>({fieldTitle, nameInSchema, data, className, disabled}: SelectWithLabelProps<S>) {
     const form = useFormContext()
 
     return (
@@ -52,20 +54,25 @@ export function SelectWithLabel<S>({fieldTitle, nameInSchema, data, className}: 
                     >
                         <FormControl>
                             <SelectTrigger
+                                disabled={disabled || !data}
                                 id={nameInSchema}
-                                className={`w-full bg-background mb-2 ${className}`}
+                                className={`w-full !bg-background mb-2 ${className}`}
                             >
-                                <SelectValue placeholder="Select" />
+                                {data ?
+                                    <SelectValue placeholder="Select" />
+                                :
+                                    <ThreeDotLoading />
+                                }
                             </SelectTrigger>
                         </FormControl>
 
                         <SelectContent>
-                            {data.map(item => (
+                            {data && data.map(item => (
                                 <SelectItem
                                     key={`${nameInSchema}_${item.id}`}
                                     value={item.id}
                                 >
-                                    {item.description}
+                                    {item.text}
                                 </SelectItem>
                             ))}
                         </SelectContent>

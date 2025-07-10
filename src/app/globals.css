@@ -226,7 +226,7 @@ button {
 }
 
 .blur-card {
-  @apply bg-accent/30 dark:bg-accent/50 backdrop-blur-sm border shadow overflow-hidden rounded-lg;
+  @apply bg-accent/40 backdrop-blur-sm border shadow overflow-hidden rounded-lg;
 }
 
 .sidebar-button {
@@ -240,8 +240,7 @@ button {
 .outline-destructive-button {
   @apply 
   text-destructive/80 dark:text-destructive/90 hover:text-destructive
-  border-destructive/20 dark:border-destructive/30
-  dark:bg-destructive/15 hover:bg-destructive/5 dark:hover:bg-destructive/20;
+  border-destructive/20 dark:border-destructive/30;
 }
 /* 
 .sidebar-button[data-variant="destructive"]:hover {

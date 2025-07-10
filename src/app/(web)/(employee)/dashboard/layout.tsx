@@ -1,7 +1,7 @@
 
 import { ContentWrapper } from "./_components/content-wrapper";
-import { Sidebar } from "./_components/sidebar/sidebar";
 import { BgFixed } from "./_components/bg-fixed";
+import { Sidebar } from "./_components/sidebar/Sidebar";
 
 
 

@@ -1,5 +1,5 @@
 {
-  "id": "43a14286-a7c6-44ad-84eb-edba60b1baf7",
+  "id": "d986b859-5af1-4456-b2f0-c072812c5ee2",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -38,26 +38,26 @@
           "primaryKey": false,
           "notNull": true
         },
-        "address1": {
-          "name": "address1",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "address2": {
-          "name": "address2",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "city": {
-          "name": "city",
+        "address": {
+          "name": "address",
           "type": "varchar",
           "primaryKey": false,
           "notNull": true
         },
         "province": {
           "name": "province",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "district": {
+          "name": "district",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "city": {
+          "name": "city",
           "type": "varchar",
           "primaryKey": false,
           "notNull": true
@@ -158,8 +158,7 @@
           "name": "tech",
           "type": "varchar",
           "primaryKey": false,
-          "notNull": true,
-          "default": "'unassigned'"
+          "notNull": false
         },
         "created_at": {
           "name": "created_at",

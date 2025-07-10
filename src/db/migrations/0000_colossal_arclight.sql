@@ -4,10 +4,10 @@ CREATE TABLE "customers" (
 	"last_name" varchar NOT NULL,
 	"email" varchar NOT NULL,
 	"phone" varchar NOT NULL,
-	"address1" varchar NOT NULL,
-	"address2" varchar,
-	"city" varchar NOT NULL,
+	"address" varchar NOT NULL,
 	"province" varchar NOT NULL,
+	"district" varchar NOT NULL,
+	"city" varchar NOT NULL,
 	"post_code" varchar(5) NOT NULL,
 	"notes" text,
 	"active" boolean DEFAULT true NOT NULL,
@@ -23,7 +23,7 @@ CREATE TABLE "tickets" (
 	"title" varchar NOT NULL,
 	"description" text,
 	"completed" boolean DEFAULT false NOT NULL,
-	"tech" varchar DEFAULT 'unassigned' NOT NULL,
+	"tech" varchar,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );

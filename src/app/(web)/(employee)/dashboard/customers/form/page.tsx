@@ -7,6 +7,16 @@ type CustomerFormPage = {
     searchParams: Promise<{ [key: string]: string | undefined }>
 }
 
+export async function generateMetadata({ searchParams }: CustomerFormPage) {
+  const { c } = await searchParams
+
+  if (c) {
+    return {title: `Edit customer #${c}` }
+  } else {
+    return {title: 'New Customer'}
+  }
+}
+
 export default async function CustomerFormPage({searchParams}:CustomerFormPage) {
   try {
     const { c } = await searchParams

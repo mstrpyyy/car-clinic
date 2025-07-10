@@ -53,7 +53,7 @@ export const Sidebar = () => {
       />
 
       <nav>
-        <ul className="space-y-3 sm:mt-10 max-sm:hidden"> 
+        <ul className="space-y-3 sm:mt-10 max-sm:hidden z-50"> 
           {routes.map((route, idx) => {
             const isActive = currentPath.startsWith(route.url)
             return (
@@ -68,7 +68,7 @@ export const Sidebar = () => {
                 <div 
                   className={`absolute left-16 top-1/2 -translate-y-1/2 
                   pointer-events-none overflow-hidden content-center
-                  bg-background/50 backdrop-blur-sm border shadow 
+                  bg-background border shadow 
                   h-10 px-2 rounded-lg text-sm
                   -translate-x-3 group-hover:translate-x-0
                   opacity-0 group-hover:opacity-100
@@ -88,7 +88,6 @@ export const Sidebar = () => {
         <ModeToggle className="w-10 h-10 rounded-lg" />
 
         <div className="h-[1px] bg-muted-foreground"/>
-
           <Button
             variant={'outline'}
             data-variant="destructive"
@@ -96,9 +95,9 @@ export const Sidebar = () => {
             aria-label='LogOut'
             title='LogOut'
           >
-        <LogoutLink>
-            <RiLogoutBoxRLine className=""/>
-        </LogoutLink>
+            <LogoutLink>
+                <RiLogoutBoxRLine className=""/>
+            </LogoutLink>
           </Button>
       </div>
 

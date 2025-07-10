@@ -5,15 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1751858410269,
-      "tag": "0000_first_dorian_gray",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1751859401674,
-      "tag": "0001_plain_the_fury",
+      "when": 1752032555016,
+      "tag": "0000_colossal_arclight",
       "breakpoints": true
     }
   ]

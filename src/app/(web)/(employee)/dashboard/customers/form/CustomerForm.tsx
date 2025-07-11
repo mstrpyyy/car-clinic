@@ -61,8 +61,6 @@ export default function CustomerForm({ customer }: CustomerFormProps) {
   const district = form.watch('district');
   const postCode = form.watch('postCode');
 
-  console.log(city, district ,postCode)
-
   // FETCH PROVICE
   useEffect(() => {
     fetchAddressData({

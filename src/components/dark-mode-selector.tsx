@@ -11,13 +11,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-type Alignment = {
+type ModeToggleProps = {
   align?: "center" | "start" | "end"
   side?: "top" | "right" | "bottom" | "left"
   className?: string
 }
 
-export const ModeToggle: React.FC<Alignment> = ({ align, side, className }) => {
+export const ModeToggle: React.FC<ModeToggleProps> = ({ align, side, className }) => {
   const { setTheme } = useTheme()
 
   return (

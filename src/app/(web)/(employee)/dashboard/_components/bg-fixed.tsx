@@ -31,7 +31,7 @@ export const BgFixed:React.FC = () => {
           fill
           sizes="100vw"
           className={`object-cover object-center z-0 transition-all duration-1000 opacity-0 ${loaded && 'opacity-100'}`} 
-          onLoadingComplete={() => setLoaded(true)}
+          onLoad={() => setLoaded(true)}
           priority
         />
       </div>

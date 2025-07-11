@@ -1,13 +1,12 @@
 'use client'
 
-import { RiHome3Line, RiHome3Fill, RiFileUserLine, RiFileUserFill, RiFileList3Line, RiFileList3Fill, RiLogoutBoxRLine } from "react-icons/ri";
+import { RiHome3Line, RiHome3Fill, RiFileUserLine, RiFileUserFill, RiFileList3Line, RiFileList3Fill } from "react-icons/ri";
 import Link from "next/link"
 import { usePathname } from "next/navigation";
 import { ModeToggle } from "@/components/dark-mode-selector";
-import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs";
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { pathWithoutLocale } from "@/utils/general.utils";
+import { UserDropdownMenu } from "@/components/user-dropdown-menu";
 
 const routes = [
   {
@@ -88,18 +87,9 @@ export const Sidebar = () => {
         <ModeToggle className="w-10 h-10 rounded-lg" />
 
         <div className="h-[1px] bg-muted-foreground"/>
-          <Button
-            variant={'outline'}
-            data-variant="destructive"
-            className="outline-destructive-button h-10 w-10"
-            aria-label='LogOut'
-            title='LogOut'
-          >
-            <LogoutLink>
-                <RiLogoutBoxRLine className=""/>
-            </LogoutLink>
-          </Button>
+          <UserDropdownMenu />
       </div>
+
 
 
     </div>

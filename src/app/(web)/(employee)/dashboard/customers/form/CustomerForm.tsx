@@ -15,6 +15,13 @@ import { CheckboxWithLabel } from "../../_components/inputs/checkbox-with-label"
 import { useEffect, useState } from "react"
 import { fetchAddressData } from "@/utils/post.utils"
 
+import { useAction } from 'next-safe-action/hooks'
+import { saveCustomerAction } from "@/app/actions/saveCustomerActions" 
+import { toast } from "sonner"
+import { LoaderCircle } from "lucide-react"
+import { DisplayServerActionResponse } from "@/components/display-server-action-response"
+
+
 type CustomerFormProps = {
   customer?: SelectCustomerSchemaType,
 }
@@ -24,8 +31,6 @@ type address = {
   text:string
 }
 
-type CustomerFormDefaultValues = Partial<SelectCustomerSchemaType> & InsertCustomerSchemaType;
-
 export default function CustomerForm({ customer }: CustomerFormProps) {
   const [provinceList, setProvinceList] = useState<address[] | undefined>()
   const [cityList, setCityList] = useState<address[] | undefined>()
@@ -33,8 +38,9 @@ export default function CustomerForm({ customer }: CustomerFormProps) {
   const [postCodeList, setPostCodeList] = useState<address[] | undefined>()
   const { getPermission, isLoading } = useKindeBrowserClient()
   const isManager = !isLoading && getPermission('manager')?.isGranted
+  // const customerId = customer?.id ?? 0
 
-  const defaultValues: CustomerFormDefaultValues = {
+  const defaultValues: InsertCustomerSchemaType = {
     id: customer?.id ?? 0,
     firstName: customer?.firstName ?? '',
     lastName: customer?.lastName ?? '',
@@ -60,6 +66,23 @@ export default function CustomerForm({ customer }: CustomerFormProps) {
   const city = form.watch('city');
   const district = form.watch('district');
   const postCode = form.watch('postCode');
+
+  console.log();
+
+  // const boundCustomerData = saveCustomerAction.bind(
+  //   null,
+  //   customerId,
+  // );
+
+  const { execute: executeSave, result: saveResult, isPending: loadingSave, reset: resetSave } = useAction(saveCustomerAction, {
+    onSuccess({ data }) {
+      toast.success("success", {description: data.message})
+    },
+    onError({ error }) {
+      console.log(error);
+      toast.error("Error", {description: 'Something went wrong, save failed.'})
+    }
+  })
 
   // FETCH PROVICE
   useEffect(() => {
@@ -141,7 +164,9 @@ export default function CustomerForm({ customer }: CustomerFormProps) {
 
 
   async function submitForm(data: InsertCustomerSchemaType) {
-      console.log(data)
+    console.log(data);
+      // console.log(data)
+    executeSave(data)
   }
 
   return (
@@ -151,8 +176,8 @@ export default function CustomerForm({ customer }: CustomerFormProps) {
           {customer?.id ? "Edit" : "New"} Customer {customer?.id ? `#${customer.id}` : "Form"}
         </h1>
       </div>
-
       <DivWrapper>
+        <DisplayServerActionResponse result={saveResult} />
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(submitForm)}
@@ -250,7 +275,10 @@ export default function CustomerForm({ customer }: CustomerFormProps) {
                 variant="secondary"
                 title="Reset"
                 className="max-md:flex-1 w-44"
-                onClick={() => form.reset(defaultValues)}
+                onClick={() => {
+                  form.reset(defaultValues)
+                  resetSave()
+                }}
               >
                 Reset
               </Button>
@@ -260,8 +288,16 @@ export default function CustomerForm({ customer }: CustomerFormProps) {
                 className="max-md:flex-1 w-44"
                 variant="default"
                 title="Save"
+                disabled={loadingSave}
               >
-                Save
+                {loadingSave ? 
+                <>
+                  Saving
+                  <LoaderCircle className="animate-spin" /> 
+                </>
+                : 
+                  "Save"
+                }
               </Button>
             </div>
           </form>

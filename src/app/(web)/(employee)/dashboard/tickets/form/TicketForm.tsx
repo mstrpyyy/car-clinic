@@ -13,6 +13,12 @@ import { DivWrapper } from "../../_components/div-wrapper"
 import Image from "next/image"
 import { SelectWithLabel } from "../../_components/inputs/select-with-label"
 
+import { useAction } from 'next-safe-action/hooks'
+import { saveTicketAction } from "@/app/actions/saveTIcketActions"
+import { LoaderCircle } from 'lucide-react'
+import { DisplayServerActionResponse } from "@/components/display-server-action-response" 
+import { toast } from "sonner"
+
 type TicketFormProps = {
     customer: SelectCustomerSchemaType,
     ticket?: SelectTicketSchemaType,
@@ -30,7 +36,6 @@ type TicketFormDefaultValues = Omit<Partial<SelectTicketSchemaType>, "id"> & {
 
 export default function TicketForm({ customer, ticket, techs, isEditable = true, userEmail }: TicketFormProps) {
     const isManager = Array.isArray(techs)
-    console.log(isManager);
     
     const defaultValues: TicketFormDefaultValues = {
         id: ticket?.id ?? "(New)",
@@ -48,8 +53,19 @@ export default function TicketForm({ customer, ticket, techs, isEditable = true,
     })
     const completed = form.watch('completed');
 
+    const { execute: executeSave, result: saveResult, isPending: loadingSave, reset: resetSave } = useAction(saveTicketAction, {
+        onSuccess({ data }) {
+            toast.success("success", {description: data.message})
+        },
+        onError({ error }) {
+            console.log(error);
+            toast.error("Error", {description: 'Something went wrong, save failed.'})
+        }
+    })
+
     async function submitForm(data: InsertTicketSchemaType) {
         console.log(data)
+        executeSave(data)
     }
 
     return (
@@ -128,6 +144,7 @@ export default function TicketForm({ customer, ticket, techs, isEditable = true,
                 </div>
             </div>
             <DivWrapper className="space-y-4 xl:mt-14 flex-1">
+                <DisplayServerActionResponse result={saveResult} />
                 <h2 className="font-bold text-2xl">Ticket Form</h2>
                 <Form {...form}>
                     <form
@@ -187,19 +204,31 @@ export default function TicketForm({ customer, ticket, techs, isEditable = true,
                                         type="button"
                                         variant="secondary"
                                         title="Reset"
-                                        className="flex-1"
-                                        onClick={() => form.reset(defaultValues)}
-                                    >
+                                        className="max-md:flex-1 w-44"
+                                        onClick={() => {
+                                            form.reset(defaultValues)
+                                            resetSave()
+                                            }}
+                                        >
                                         Reset
                                     </Button>
+
                                     <Button
                                         type="submit"
-                                        className="flex-1"
+                                        className="max-md:flex-1 w-44"
                                         variant="default"
                                         title="Save"
+                                        disabled={loadingSave}
                                     >
-                                        Save
-                                    </Button>                                    
+                                        {loadingSave ? 
+                                            <>
+                                                Saving
+                                                <LoaderCircle className="animate-spin" /> 
+                                            </>
+                                        : 
+                                            "Save"
+                                        }
+                                    </Button>                                  
                                 </div>
                             }
                     </form>

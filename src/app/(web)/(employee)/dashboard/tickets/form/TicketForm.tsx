@@ -16,8 +16,8 @@ import { SelectWithLabel } from "../../_components/inputs/select-with-label"
 import { useAction } from 'next-safe-action/hooks'
 import { saveTicketAction } from "@/app/actions/saveTIcketActions"
 import { LoaderCircle } from 'lucide-react'
-import { DisplayServerActionResponse } from "@/components/display-server-action-response" 
 import { toast } from "sonner"
+import { serverActionResponse } from "@/utils/general.utils"
 
 type TicketFormProps = {
     customer: SelectCustomerSchemaType,
@@ -53,13 +53,14 @@ export default function TicketForm({ customer, ticket, techs, isEditable = true,
     })
     const completed = form.watch('completed');
 
-    const { execute: executeSave, result: saveResult, isPending: loadingSave, reset: resetSave } = useAction(saveTicketAction, {
+    const { execute: executeSave, isPending: loadingSave, reset: resetSave } = useAction(saveTicketAction, {
         onSuccess({ data }) {
+            console.log('data', data);
             toast.success("success", {description: data.message})
         },
         onError({ error }) {
-            console.log(error);
-            toast.error("Error", {description: 'Something went wrong, save failed.'})
+            const message = serverActionResponse(error)
+            toast.error("Error", {description: message})
         }
     })
 
@@ -72,7 +73,7 @@ export default function TicketForm({ customer, ticket, techs, isEditable = true,
         <div className="flex max-xl:flex-col gap-4 min-h-[100px]">
             <div className="flex-1 xl:max-w-md">
                 <div className="sticky top-8 overflow-y-auto">
-                    <h1 className="text-4xl font-bold h-14 content-top ">
+                    <h1 className="text-4xl font-bold h-20 content-center">
                         {ticket?.id
                             ? `Edit Ticket # ${ticket.id}`
                             : "New Ticket Form"
@@ -143,8 +144,8 @@ export default function TicketForm({ customer, ticket, techs, isEditable = true,
                     </DivWrapper>
                 </div>
             </div>
-            <DivWrapper className="space-y-4 xl:mt-14 flex-1">
-                <DisplayServerActionResponse result={saveResult} />
+            <DivWrapper className="space-y-4 xl:mt-20 flex-1">
+                {/* <DisplayServerActionResponse result={saveResult} /> */}
                 <h2 className="font-bold text-2xl">Ticket Form</h2>
                 <Form {...form}>
                     <form
@@ -199,12 +200,12 @@ export default function TicketForm({ customer, ticket, techs, isEditable = true,
                             <hr className="w-full dark:border-accent-foreground/20 my-4" />
                             
                             {isEditable &&
-                                <div className="flex mt-4 gap-2">
+                                <div className="flex justify-end mt-4 gap-2">
                                     <Button
                                         type="button"
                                         variant="secondary"
                                         title="Reset"
-                                        className="max-md:flex-1 w-44"
+                                        className="max-lg:flex-1 w-44"
                                         onClick={() => {
                                             form.reset(defaultValues)
                                             resetSave()
@@ -215,7 +216,7 @@ export default function TicketForm({ customer, ticket, techs, isEditable = true,
 
                                     <Button
                                         type="submit"
-                                        className="max-md:flex-1 w-44"
+                                        className="max-lg:flex-1 w-44"
                                         variant="default"
                                         title="Save"
                                         disabled={loadingSave}

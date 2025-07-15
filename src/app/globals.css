@@ -226,7 +226,7 @@ button {
 }
 
 .blur-card {
-  @apply bg-accent/40 backdrop-blur-sm border shadow overflow-hidden rounded-lg;
+  @apply bg-accent/30 dark:bg-accent/70 backdrop-blur-sm border shadow overflow-hidden rounded-lg; 
 }
 
 .sidebar-button {

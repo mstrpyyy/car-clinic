@@ -19,7 +19,7 @@ import { useAction } from 'next-safe-action/hooks'
 import { saveCustomerAction } from "@/app/actions/saveCustomerActions" 
 import { toast } from "sonner"
 import { LoaderCircle } from "lucide-react"
-import { DisplayServerActionResponse } from "@/components/display-server-action-response"
+import { serverActionResponse } from "@/utils/general.utils"
 
 
 type CustomerFormProps = {
@@ -74,13 +74,14 @@ export default function CustomerForm({ customer }: CustomerFormProps) {
   //   customerId,
   // );
 
-  const { execute: executeSave, result: saveResult, isPending: loadingSave, reset: resetSave } = useAction(saveCustomerAction, {
+  const { execute: executeSave, isPending: loadingSave, reset: resetSave } = useAction(saveCustomerAction, {
     onSuccess({ data }) {
+      console.log('data', data);
       toast.success("success", {description: data.message})
     },
     onError({ error }) {
-      console.log(error);
-      toast.error("Error", {description: 'Something went wrong, save failed.'})
+      const message = serverActionResponse(error)
+      toast.error("Error", {description: message})
     }
   })
 
@@ -164,8 +165,6 @@ export default function CustomerForm({ customer }: CustomerFormProps) {
 
 
   async function submitForm(data: InsertCustomerSchemaType) {
-    console.log(data);
-      // console.log(data)
     executeSave(data)
   }
 
@@ -177,7 +176,6 @@ export default function CustomerForm({ customer }: CustomerFormProps) {
         </h1>
       </div>
       <DivWrapper>
-        <DisplayServerActionResponse result={saveResult} />
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(submitForm)}
@@ -274,7 +272,7 @@ export default function CustomerForm({ customer }: CustomerFormProps) {
                 type="button"
                 variant="secondary"
                 title="Reset"
-                className="max-md:flex-1 w-44"
+                className="max-lg:flex-1 w-44"
                 onClick={() => {
                   form.reset(defaultValues)
                   resetSave()
@@ -285,7 +283,7 @@ export default function CustomerForm({ customer }: CustomerFormProps) {
 
               <Button
                 type="submit"
-                className="max-md:flex-1 w-44"
+                className="max-lg:flex-1 w-44"
                 variant="default"
                 title="Save"
                 disabled={loadingSave}

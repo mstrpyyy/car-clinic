@@ -13,6 +13,12 @@ import { DivWrapper } from "../../_components/div-wrapper"
 import Image from "next/image"
 import { SelectWithLabel } from "../../_components/inputs/select-with-label"
 
+import { useAction } from 'next-safe-action/hooks'
+import { saveTicketAction } from "@/app/actions/saveTIcketActions"
+import { LoaderCircle } from 'lucide-react'
+import { toast } from "sonner"
+import { serverActionResponse } from "@/utils/general.utils"
+
 type TicketFormProps = {
     customer: SelectCustomerSchemaType,
     ticket?: SelectTicketSchemaType,
@@ -30,7 +36,6 @@ type TicketFormDefaultValues = Omit<Partial<SelectTicketSchemaType>, "id"> & {
 
 export default function TicketForm({ customer, ticket, techs, isEditable = true, userEmail }: TicketFormProps) {
     const isManager = Array.isArray(techs)
-    console.log(isManager);
     
     const defaultValues: TicketFormDefaultValues = {
         id: ticket?.id ?? "(New)",
@@ -48,15 +53,27 @@ export default function TicketForm({ customer, ticket, techs, isEditable = true,
     })
     const completed = form.watch('completed');
 
+    const { execute: executeSave, isPending: loadingSave, reset: resetSave } = useAction(saveTicketAction, {
+        onSuccess({ data }) {
+            console.log('data', data);
+            toast.success("success", {description: data.message})
+        },
+        onError({ error }) {
+            const message = serverActionResponse(error)
+            toast.error("Error", {description: message})
+        }
+    })
+
     async function submitForm(data: InsertTicketSchemaType) {
         console.log(data)
+        executeSave(data)
     }
 
     return (
         <div className="flex max-xl:flex-col gap-4 min-h-[100px]">
             <div className="flex-1 xl:max-w-md">
                 <div className="sticky top-8 overflow-y-auto">
-                    <h1 className="text-4xl font-bold h-14 content-top ">
+                    <h1 className="text-4xl font-bold h-20 content-center">
                         {ticket?.id
                             ? `Edit Ticket # ${ticket.id}`
                             : "New Ticket Form"
@@ -127,7 +144,8 @@ export default function TicketForm({ customer, ticket, techs, isEditable = true,
                     </DivWrapper>
                 </div>
             </div>
-            <DivWrapper className="space-y-4 xl:mt-14 flex-1">
+            <DivWrapper className="space-y-4 xl:mt-20 flex-1">
+                {/* <DisplayServerActionResponse result={saveResult} /> */}
                 <h2 className="font-bold text-2xl">Ticket Form</h2>
                 <Form {...form}>
                     <form
@@ -182,24 +200,36 @@ export default function TicketForm({ customer, ticket, techs, isEditable = true,
                             <hr className="w-full dark:border-accent-foreground/20 my-4" />
                             
                             {isEditable &&
-                                <div className="flex mt-4 gap-2">
+                                <div className="flex justify-end mt-4 gap-2">
                                     <Button
                                         type="button"
                                         variant="secondary"
                                         title="Reset"
-                                        className="flex-1"
-                                        onClick={() => form.reset(defaultValues)}
-                                    >
+                                        className="max-lg:flex-1 w-44"
+                                        onClick={() => {
+                                            form.reset(defaultValues)
+                                            resetSave()
+                                            }}
+                                        >
                                         Reset
                                     </Button>
+
                                     <Button
                                         type="submit"
-                                        className="flex-1"
+                                        className="max-lg:flex-1 w-44"
                                         variant="default"
                                         title="Save"
+                                        disabled={loadingSave}
                                     >
-                                        Save
-                                    </Button>                                    
+                                        {loadingSave ? 
+                                            <>
+                                                Saving
+                                                <LoaderCircle className="animate-spin" /> 
+                                            </>
+                                        : 
+                                            "Save"
+                                        }
+                                    </Button>                                  
                                 </div>
                             }
                     </form>

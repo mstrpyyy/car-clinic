@@ -10,7 +10,6 @@ type ServerResponseProps = {
 
 export const serverActionResponse = (result: ServerResponseProps) => {
       const { data, serverError, validationErrors } = result
-      console.log(result);
 
       if (data?.message) return data.message
       if (serverError) return serverError

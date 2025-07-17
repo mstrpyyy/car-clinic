@@ -1,4 +1,4 @@
-import { getCustomer } from "@/domain/customer/repository";
+import { getCustomer, getCustomerSearch } from "@/domain/customer/repository";
 import { removeLeadingZero } from "@/utils/backend.utils";
 
 export async function getCustomerById(id: number) {
@@ -6,4 +6,9 @@ export async function getCustomerById(id: number) {
   const customer = await getCustomer(validId)
 
   return customer
+}
+
+export async function getCustomerBySearch(searchText: string) {
+  const results = await getCustomerSearch(searchText)
+  return results
 }

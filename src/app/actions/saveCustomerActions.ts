@@ -11,7 +11,7 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 // import z from "zod";
 
 export const saveCustomerAction = actionClient
-  .metadata({ actionName: "saveCustomerAction" })
+  .metadata({ actionName: "saveCustomerAction" }) 
   .inputSchema(insertCustomerSchema, {
     handleValidationErrorsShape: async(ve) => flattenValidationErrors(ve).fieldErrors
   })

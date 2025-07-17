@@ -22,7 +22,7 @@ export default function RootLayout({
       />
       <Sidebar />
       <BgFixed />
-      <ContentWrapper className="min-h-dvh z-10 px-4 sm:px-8">
+      <ContentWrapper className="min-h-dvh z-10 sm:max-w-[calc(100%-64px)] px-4 sm:px-8 ">
           {children}
       </ContentWrapper>
     </div>

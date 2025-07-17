@@ -55,7 +55,7 @@ export default function TicketForm({ customer, ticket, techs, isEditable = true,
 
     const { execute: executeSave, isPending: loadingSave, reset: resetSave } = useAction(saveTicketAction, {
         onSuccess({ data }) {
-            console.log('data', data);
+            // console.log('data', data);
             toast.success("success", {description: data.message})
         },
         onError({ error }) {
@@ -65,7 +65,7 @@ export default function TicketForm({ customer, ticket, techs, isEditable = true,
     })
 
     async function submitForm(data: InsertTicketSchemaType) {
-        console.log(data)
+        // console.log(data)
         executeSave(data)
     }
 

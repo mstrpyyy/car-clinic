@@ -67,8 +67,6 @@ export default function CustomerForm({ customer }: CustomerFormProps) {
   const district = form.watch('district');
   const postCode = form.watch('postCode');
 
-  console.log();
-
   // const boundCustomerData = saveCustomerAction.bind(
   //   null,
   //   customerId,
@@ -76,7 +74,7 @@ export default function CustomerForm({ customer }: CustomerFormProps) {
 
   const { execute: executeSave, isPending: loadingSave, reset: resetSave } = useAction(saveCustomerAction, {
     onSuccess({ data }) {
-      console.log('data', data);
+      // console.log('data', data);
       toast.success("success", {description: data.message})
     },
     onError({ error }) {

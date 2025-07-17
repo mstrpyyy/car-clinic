@@ -7,7 +7,7 @@ type ContentWrapper = {
 
 export const ContentWrapper:React.FC<ContentWrapper> = ({children, className}) => {
   return (
-    <div className={`w-full text-wrap py-8 ${className}`}>
+    <div className={`flex-1 text-wrap py-8 ${className}`}>
       {children}
     </div>
   )

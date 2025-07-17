@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { ReactScan } from "@/components/react-scan";
 
 export const metadata: Metadata = {
   title: {
@@ -39,16 +40,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`font-jakarta`}>
-        <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
-      </body>
+      {/* <ReactScan /> */}
+        <body className={`font-jakarta`}>
+          <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </body>
     </html>
   );
 }

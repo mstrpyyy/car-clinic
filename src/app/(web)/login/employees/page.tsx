@@ -6,51 +6,37 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { Shield } from "lucide-react"
 import { ModeToggle } from '@/components/dark-mode-selector'
-import { useTheme } from 'next-themes'
-import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { LoginLink } from '@kinde-oss/kinde-auth-nextjs'
+import { BgFixed } from '@/components/bg-fixed'
 
 
 
 export default function LoginStaff() {
-  const { resolvedTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  if (!mounted) {
-    return null
-  }
-
-  const imageSrc = resolvedTheme === 'dark'
-    ? '/images/bg-login-d.svg'
-    : '/images/bg-login-l.svg'
-
   return (
     <div className='min-h-dvh w-full relative flex items-center justify-center p-4'>
       
       {/* Background */}
-      <Image
-        src={imageSrc}
-        alt="banner image"
-        fill
-        sizes="100vw"
-        className="object-cover object-bottom z-0"
-        priority
+      <BgFixed         
+        imageUrl='/images/bg-login-l.svg'
+        imageUrlDark='/images/bg-login-d.svg'
+        objectPosition="object-bottom"
       />
 
       {/* Toggle Dark Mode */}
       <ModeToggle
         align='end'
         side='bottom'
-        className='absolute top-6 right-6 sm:top-10 sm:right-10 z-50'
+        className='absolute top-6 right-6 sm:top-10 sm:right-10 z-50 max-md:hidden'
       />
 
       {/* Login Card */}
       <Card className='w-full max-w-md blur-card py-10 px-6 z-50'>
+         <ModeToggle
+          align='end'
+          side='bottom'
+          className='absolute top-6 right-6 z-50 md:hidden'
+        />
         <header>
           <Image
             src={'/logo/cclogo.png'} 

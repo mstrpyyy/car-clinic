@@ -10,20 +10,20 @@ import { InputWithLabel } from "../../_components/inputs/input-with-label"
 import { TextareaWithLabel } from "../../_components/inputs/textArea-with-label"
 import { SelectWithLabel } from "../../_components/inputs/select-with-label"
 import { DivWrapper } from "../../_components/div-wrapper"
-import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs"
 import { CheckboxWithLabel } from "../../_components/inputs/checkbox-with-label"
 import { useEffect, useState } from "react"
 import { fetchAddressData } from "@/utils/post.utils"
-
 import { useAction } from 'next-safe-action/hooks'
 import { saveCustomerAction } from "@/app/actions/saveCustomerActions" 
 import { toast } from "sonner"
 import { LoaderCircle } from "lucide-react"
 import { serverActionResponse } from "@/utils/general.utils"
+import { DashboardHeader } from "../../_components/dashboard-header"
 
 
 type CustomerFormProps = {
   customer?: SelectCustomerSchemaType,
+  isManager?: boolean
 }
 
 type address = {
@@ -31,14 +31,11 @@ type address = {
   text:string
 }
 
-export default function CustomerForm({ customer }: CustomerFormProps) {
+export default function CustomerForm({ customer, isManager }: CustomerFormProps) {
   const [provinceList, setProvinceList] = useState<address[] | undefined>()
   const [cityList, setCityList] = useState<address[] | undefined>()
   const [districtList, setDistrictList] = useState<address[] | undefined>()
   const [postCodeList, setPostCodeList] = useState<address[] | undefined>()
-  const { getPermission, isLoading } = useKindeBrowserClient()
-  const isManager = !isLoading && getPermission('manager')?.isGranted
-  // const customerId = customer?.id ?? 0
 
   const defaultValues: InsertCustomerSchemaType = {
     id: customer?.id ?? 0,
@@ -169,9 +166,11 @@ export default function CustomerForm({ customer }: CustomerFormProps) {
   return (
     <div className="">
       <div>
-        <h1 className="text-4xl font-bold h-20 content-center">
-          {customer?.id ? "Edit" : "New"} Customer {customer?.id ? `#${customer.id}` : "Form"}
-        </h1>
+         <DashboardHeader 
+            headingText={`${customer?.id ? "Edit" : "New"} Customer ${customer?.id ? `#${customer.id}` : "Form"}`}
+            returnUrl="/dashboard/customers/"
+            returnText="Return to Customers"
+          />
       </div>
       <DivWrapper>
         <Form {...form}>
@@ -208,7 +207,7 @@ export default function CustomerForm({ customer }: CustomerFormProps) {
                     fieldTitle="Customer Status"
                     nameInSchema="active"
                     message={active ? "Active" : "Inactive"}
-                    disabled={!isLoading && isManager && customer?.id ? false : true} 
+                    disabled={isManager && customer?.id ? false : true} 
                     className={`bg-background rounded-md h-9 
                       ${active ? "text-green-700 font-semibold dark:text-green-500" : "text-red-700 font-semibold dark:text-red-500"}
                       border border-border py-1 px-3`

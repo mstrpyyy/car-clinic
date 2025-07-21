@@ -21,11 +21,22 @@ export async function generateMetadata({ searchParams }: CustomerFormPage) {
 export default async function TicketFormPage({searchParams}:CustomerFormPage) {
     try {
         const { c, t } = await searchParams
+
+       
         
         if (!c && !t) {
             return (
                 <>
-                    <h2 className="text-2xl mb-2">Ticket ID or Customer ID required to load ticket form</h2>
+                    <h2 className="text-2xl mb-2">Ticket ID or Customer ID is required to load ticket form</h2>
+                    <BackButton title="Go Back" variant="default" />
+                </>
+            )
+        }
+
+        if ((c && isNaN(parseInt(c))) || (t && isNaN(parseInt(t)))) {
+            return (
+                <>
+                    <h2 className="text-2xl mb-2">Valid Ticket ID or Customer ID is required to load ticket form</h2> 
                     <BackButton title="Go Back" variant="default" />
                 </>
             )
@@ -41,6 +52,7 @@ export default async function TicketFormPage({searchParams}:CustomerFormPage) {
 
         // New ticket form 
         if (c) {
+
             const customer = await getCustomer(parseInt(c))
 
             if (!customer) {
@@ -66,7 +78,7 @@ export default async function TicketFormPage({searchParams}:CustomerFormPage) {
                 init() // initializes the kinde management api
                 const { users } = await Users.getUsers()
                 const techs = users ? users.map(user => ({ id: user.email!, text: user.email!})) : []
-                return <TicketForm customer={customer} techs={techs} />
+                return <TicketForm customer={customer} techs={techs} isManager={isManager} />
             } else {
                 return <TicketForm customer={customer} userEmail={userEmail!} />
             }
@@ -92,7 +104,7 @@ export default async function TicketFormPage({searchParams}:CustomerFormPage) {
                 init() // initializes the kinde management api
                 const { users } = await Users.getUsers()
                 const techs = users ? users.map(user => ({ id: user.email!, text: user.email!})) : []
-                return <TicketForm customer={customer} techs={techs} ticket={ticket} />
+                return <TicketForm customer={customer} techs={techs} ticket={ticket} isManager={isManager} />
             } else {
                 const isEditable = user?.email?.toLowerCase() === ticket.tech?.toLowerCase()
                 return <TicketForm customer={customer} ticket={ticket} isEditable={isEditable} userEmail={userEmail!} />

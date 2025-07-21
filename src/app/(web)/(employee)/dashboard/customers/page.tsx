@@ -12,11 +12,11 @@ export const metadata = {
 }
 
 export default async function Costumers({searchParams}:CustomerSearchProps) {
-  const { searchText } = await searchParams
+  const { search } = await searchParams
 
-    if (!searchText) return <CustomerSearch />
+    if (!search) return <CustomerSearch />
 
-    const results = await getCustomerBySearch(searchText)
+    const results = await getCustomerBySearch(search)
 
     return (
         <>

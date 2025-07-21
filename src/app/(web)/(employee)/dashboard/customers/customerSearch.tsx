@@ -9,7 +9,7 @@ export default function CustomerSearch() {
             className="flex gap-2 items-center"
         >
             <Input
-                name="searchText"
+                name="search"
                 type="text"
                 placeholder="Search Customers"
                 className="w-full"

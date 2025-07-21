@@ -1,6 +1,6 @@
 
+import { BgFixed } from "@/components/bg-fixed";
 import { ContentWrapper } from "./_components/content-wrapper";
-import { BgFixed } from "./_components/bg-fixed";
 import { Sidebar } from "./_components/sidebar/Sidebar";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -21,7 +21,10 @@ export default function RootLayout({
         richColors  
       />
       <Sidebar />
-      <BgFixed />
+      <BgFixed 
+        imageUrl='/images/bg-dashboard-l.svg'
+        imageUrlDark='/images/bg-dashboard-d.svg'
+      />
       <ContentWrapper className="min-h-dvh z-10 sm:max-w-[calc(100%-64px)] px-4 sm:px-8 ">
           {children}
       </ContentWrapper>

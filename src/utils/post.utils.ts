@@ -1,4 +1,4 @@
-import { GET_HTTP } from "@/lib/http-request.utils";
+import { GET_HTTP } from "@/lib/http-request";
 import { UseFormReturn } from "react-hook-form";
 
 type address = {

@@ -1,4 +1,4 @@
-import { GET_HTTP } from "@/lib/http-request.utils";
+import { GET_HTTP } from "@/lib/http-request";
 import { TAddress } from "@/types/general.types";
 
 type AddressType = 

@@ -13,6 +13,7 @@ export default withAuth(
 
 export const config = {
   matcher: [
-    '/((?!api|_next/static|_next/image|auth|favicon.ico|robots.txt|images(?:/.*)?|fonts|login|logo(?:\\.svg)?|$).*)',
+    '/((?!api|_next/static|_next/image|auth|favicon.ico|robots.txt|images(?:/.*)?|logo(?:/.*)?|fonts|login|$).*)',
   ],
 };
+

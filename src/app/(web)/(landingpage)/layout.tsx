@@ -1,5 +1,5 @@
-import { Footer } from "./_components/footer/Footer";
-import { Navbar } from "./_components/navbar/Navbar";
+import { Footer } from "./_components/footer/landingpage-footer";
+import { Navbar } from "./_components/navbar/landingpage-navbar";
 
 
 
